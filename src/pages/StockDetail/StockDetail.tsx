@@ -4,7 +4,8 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import style from "./StockDetail.module.css";
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import AlertDialog from "../../components/AlertDialog";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import axios from "axios";
 
 export type GoodsType = {
@@ -32,7 +33,10 @@ export type GoodsType = {
 
 function StockDetail() {
   const [goods, setGoods] = useState<GoodsType[]>([]);
+
   const params = useParams<{ prodId: string }>();
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios
@@ -45,6 +49,7 @@ function StockDetail() {
   return (
     <div>
       <h1>Stock Detail</h1>
+      <div onClick={()=>navigate("/")} className={style.backBtn}><div><ArrowLeftIcon /></div><div>ย้อนกลับ</div></div>
       {goods.map((prod) => {
         return (
           <div key={prod.id} className={style.box}>
