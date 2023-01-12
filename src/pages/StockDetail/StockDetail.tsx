@@ -1,55 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import style from "./StockDetail.module.css";
-import { IconButton } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import AlertDialog from "../../components/AlertDialog";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-function useQuery() {
-  const { search } = useLocation();
+export type GoodsType = {
+  id: number;
+  image: string;
+  name: string;
+  amount: number;
+};
 
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
+// const AlertDialog = () =>{
+//   return <Dialog open={open} onClose={callBack}>
+//   <DialogTitle>{title}</DialogTitle>
+//   <DialogContent>
+//     <Dialog
+//     ContentText>{text}</Dialog>
+//   </DialogContent>
+//   <DialogActions>
+//     <Button onClick={callBack}>cancle</Button>
+//     <Button onClick={callBack} autoFocus>
+//       sure
+//     </Button>
+//   </DialogActions>
+// </Dialog>
+// }
 
 function StockDetail() {
-  // const handleCheck = () =>{
-  //   return <AlertDialog open={true} callBack={()=>{}} title="cdkjefop" text="ncdej"  />
-  // }
+  const [goods, setGoods] = useState<GoodsType[]>([]);
+  const params = useParams<{ prodId: string }>();
 
-  let query = useQuery();
-  console.log(query);
-  
+  useEffect(() => {
+    axios
+      .get(
+        `https://winsmoke-backend.vercel.app/api/product_type/${params.prodId}`
+      )
+      .then((res) => setGoods(res.data.product));
+  }, [params.prodId]);
 
   return (
     <div>
       <h1>Stock Detail</h1>
-      <div className={style.box}>
-        <div className={style.pic}>
-          <img
-            alt=""
-            src="https://scontent.fbkk6-2.fna.fbcdn.net/v/t39.30808-6/322702682_860964275046536_6497300217783796871_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=730e14&_nc_ohc=ujcgo6rpWMsAX_bFzLX&_nc_ht=scontent.fbkk6-2.fna&oh=00_AfDyuBOQ0hjP00b3-2Il0QhME7i6rJsGUnhYrLRf-ElxWA&oe=63C59C33"
-          />
-        </div>
-        <div className={style.content}>
-          <div className={style.name}>name</div>
-          <div className={style.detail}>
-            <div>total : 20</div>
-            <div className={style.button}>
-              <IconButton  size="small">
-                <AddCircleIcon fontSize="large" color="success"/>
-              </IconButton>
-              <IconButton  size="small">
-                <RemoveCircleIcon fontSize="large"  color="error"/>
-              </IconButton>
+      {goods.map((prod) => {
+        return (
+          <div key={prod.id} className={style.box}>
+            <div className={style.pic}>
+              <img alt={prod.name} src={prod.image} />
+            </div>
+            <div className={style.content}>
+              <div className={style.name}>{prod.name}</div>
+              <div className={style.detail}>
+                <div>amount : {prod.amount}</div>
+                <div className={style.button}>
+                  <IconButton
+                    onClick={() =>
+                      axios.put(
+                        `https://winsmoke-backend.vercel.app/api/product/${prod.id}`,
+                        { number: 1 }
+                      )
+                    }
+                    size="small"
+                  >
+                    <AddCircleIcon fontSize="large" color="success" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() =>
+                      axios.put(
+                        `https://winsmoke-backend.vercel.app/api/product/${prod.id}`,
+                        { number: -1 }
+                      )
+                    }
+                    size="small"
+                  >
+                    <RemoveCircleIcon fontSize="large" color="error" />
+                  </IconButton>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        );
+      })}
     </div>
   );
 }
 
 export default StockDetail;
-
-

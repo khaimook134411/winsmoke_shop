@@ -18,7 +18,7 @@ export default function CardProduct(props: CardProp) {
   return (
     <Card
       sx={{ width: "80vw", height: "55vw" }}
-      onClick={() => navigate(`/stock?id=${id}`)}
+      onClick={() => navigate(`/stock/${id}`)}
     >
       <CardMedia sx={{ height: "40vw" }} image={imgUrl} title="" />
       <CardContent sx={{ p: "0" }}>
