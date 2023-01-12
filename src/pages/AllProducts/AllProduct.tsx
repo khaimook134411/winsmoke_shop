@@ -1,6 +1,8 @@
-import React from "react";
+
+import React, { useEffect } from "react";
 import CardProduct from "../../components/CardProduct";
 import style from "./AllProduct.module.css";
+import axios from 'axios';
 
 const allProducts = [
   {
@@ -20,6 +22,16 @@ const allProducts = [
 ];
 
 function AllProduct() {
+  // useEffect(() => {
+  //  axios.get('https://winsmoke-backend.vercel.app//api/product_type').then(res=>{
+  //   const allProducts =res.data
+  //   console.log(allProducts);
+    
+  //  })
+  //  .catch(err=>console.log(err)
+  //  )
+  // }, [])
+  
   return (
     <div>
       <h1>AllProduct</h1>

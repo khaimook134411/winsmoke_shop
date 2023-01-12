@@ -1,0 +1,33 @@
+.box{
+
+    margin: 1vw;
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.pic img{
+    width: 100px;
+    height: 100px;
+}
+
+.name{
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.content{
+    width: 60vw;
+    text-align: left;
+}
+.detail{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button{
+    display: flex;
+    gap: 1vw;
+}
