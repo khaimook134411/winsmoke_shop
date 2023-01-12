@@ -4,11 +4,23 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import style from "./StockDetail.module.css";
 import { IconButton } from "@mui/material";
 import AlertDialog from "../../components/AlertDialog";
+import { useLocation } from "react-router-dom";
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 function StockDetail() {
-  const handleCheck = () =>{
-    return <AlertDialog open={true} callBack={()=>{}} title="cdkjefop" text="ncdej"  />
-  }
+  // const handleCheck = () =>{
+  //   return <AlertDialog open={true} callBack={()=>{}} title="cdkjefop" text="ncdej"  />
+  // }
+
+  let query = useQuery();
+  console.log(query);
+  
+
   return (
     <div>
       <h1>Stock Detail</h1>
@@ -24,7 +36,7 @@ function StockDetail() {
           <div className={style.detail}>
             <div>total : 20</div>
             <div className={style.button}>
-              <IconButton onClick={handleCheck} size="small">
+              <IconButton  size="small">
                 <AddCircleIcon fontSize="large" color="success"/>
               </IconButton>
               <IconButton  size="small">
@@ -39,3 +51,5 @@ function StockDetail() {
 }
 
 export default StockDetail;
+
+
